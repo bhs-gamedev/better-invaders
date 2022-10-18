@@ -26,20 +26,19 @@ public class Screenwrap : MonoBehaviour
 
     GameObject makeClone(Vector3 offset)
     {
-        Sprite sprite = GetComponent<SpriteRenderer>().sprite;
+        SpriteRenderer sprite = GetComponent<SpriteRenderer>();
         GameObject clone = new GameObject(gameObject.name + " Clone");
         Transform cloneTransform = clone.GetComponent<Transform>();
         cloneTransform.position = cloneTransform.position + offset;
         cloneTransform.localScale = transform.localScale;
-        clone.AddComponent<SpriteRenderer>();
-        clone.GetComponent<SpriteRenderer>().sprite = sprite;
+        SpriteRenderer cloneSprite = clone.AddComponent<SpriteRenderer>();
+        cloneSprite.sprite = sprite.sprite;
+        cloneSprite.color = sprite.color;
         return clone;
     }
 
     void Update()
     {
-
-
         float cameraHeight = Camera.main.orthographicSize * 2f ;
         float cameraWidth = Camera.main.orthographicSize * Camera.main.aspect * 2f;
 
