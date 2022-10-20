@@ -1617,3 +1617,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Script: {fileID: 11500000, guid: 02508e9ca849446cda1a4c90bafd4502, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Bullet: {fileID: 3876810953220078879, guid: 8410cb979764e4ae99a9b938be20a5af, type: 3}
