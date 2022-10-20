@@ -21,7 +21,6 @@ public class Enemy : MonoBehaviour
     }
 
     void OnCollisionEnter2D(Collision2D other) {
-        Debug.Log(other.gameObject.name);
         if (other.gameObject.tag == "Player")
         {
             other.gameObject.GetComponent<CharacterHealth>().Damage(1);

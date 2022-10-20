@@ -21,6 +21,5 @@ public class CharacterHealth : MonoBehaviour
     public void Damage(int amount)
     {
         health -= amount;
-        Debug.Log(health);
     }
 }
