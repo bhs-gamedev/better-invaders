@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
         Vector3 position = positions[Random.Range(0, 4)];
         if (lastSpawn > 3) {
             GameObject enemy = Instantiate(enemyPrefab, position, Quaternion.identity);
-            enemy.GetComponent<Enemy>().direction = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0).normalized * 4;
+            enemy.GetComponent<Enemy>().direction = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized * 4;
             lastSpawn = 0;
         }
     }
