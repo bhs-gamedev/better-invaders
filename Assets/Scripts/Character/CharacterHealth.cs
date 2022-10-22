@@ -19,8 +19,6 @@ public class CharacterHealth : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		Debug.Log(ClonesManager.singleton.getState<int>("playerHealth"));
-
 		if (ClonesManager.singleton.getState<int>("playerHealth") <= 0 && GetComponent<CloneState>().getMaster()) // bad
 		{
 			GameManager.singleton.GameOver();

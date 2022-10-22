@@ -15,9 +15,10 @@ public class ClonesManager : MonoBehaviour
 	void Awake()
 	{
 		singleton = this;
+		SceneManager.sceneLoaded += OnSceneLoaded;
 	}
 
-	void Start()
+	void OnSceneLoaded(Scene scene, LoadSceneMode mode)
 	{
 		float cameraHeight = Camera.main.orthographicSize * 2f;
 		float cameraWidth = Camera.main.orthographicSize * Camera.main.aspect * 2f;
