@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 	public static GameManager singleton;
 	[SerializeField] TMP_Text scoreText;
 	private int killCount = 0;
+	private int timeLasted = 0;
 	void Awake()
 	{
 		singleton = this;
@@ -27,6 +28,7 @@ public class GameManager : MonoBehaviour
 	void Start()
 	{
 		ClonesManager.singleton.Spawn(playerPrefab, Vector3.zero, Quaternion.identity);
+		StartCoroutine(gameClock());
 	}
 
 	// Update is called once per frame
@@ -37,6 +39,7 @@ public class GameManager : MonoBehaviour
 		{
 			SpawnEnemy();
 		}
+		Debug.Log(timeLasted);
 	}
 
 	void SpawnEnemy()
@@ -78,4 +81,12 @@ public class GameManager : MonoBehaviour
 		killCount += 1;
 	}
 
+	IEnumerator gameClock()
+	{
+		while (isPlaying)
+		{
+			yield return new WaitForSeconds(1);
+			timeLasted += 1;
+		}
+	}
 }
