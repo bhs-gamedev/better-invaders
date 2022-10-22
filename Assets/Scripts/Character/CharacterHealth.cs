@@ -24,6 +24,7 @@ public class CharacterHealth : MonoBehaviour
 		if (health <= 0)
 		{
 			GameManager.singleton.GameOver();
+			Destroy(gameObject);
 		}
 	}
 }

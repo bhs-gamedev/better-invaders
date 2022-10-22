@@ -65,4 +65,12 @@ public class Screenwrap : MonoBehaviour
             clones[i].transform.rotation = gameObject.transform.rotation;
         }
     }
+
+    void OnDestroy()
+    {
+        foreach (GameObject clone in clones)
+        {
+            Destroy(clone);
+        }
+    }
 }

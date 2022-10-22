@@ -14,14 +14,14 @@ public class GameManager : MonoBehaviour
 
 	float lastSpawn = 0f;
 	bool isPlaying = true;
-	public GameObject enemyPrefab;
-	public GameObject gameOverMenu;
-	GameObject player;
+	[SerializeField] private GameObject enemyPrefab;
+	[SerializeField] private GameObject gameOverMenu;
+	[SerializeField] private GameObject playerPrefab;
 
 	// Start is called before the first frame update
 	void Start()
 	{
-		player = GameObject.Find("Player");
+		ClonesManager.singleton.Spawn(playerPrefab);
 	}
 
 	// Update is called once per frame
@@ -54,7 +54,6 @@ public class GameManager : MonoBehaviour
 	{
 		isPlaying = false;
 		gameOverMenu.SetActive(true);
-		player.GetComponent<CharacterMovement>().enabled = false;
 	}
 
 	public void PlayAgain()
