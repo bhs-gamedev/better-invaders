@@ -10,7 +10,10 @@ public class Shooting : MonoBehaviour
 	// Start is called before the first frame update
 	void Awake()
 	{
-
+		if (!GetComponent<CloneState>().isMaster)
+		{
+			Destroy(this);
+		}
 	}
 	void Start()
 	{
@@ -20,7 +23,7 @@ public class Shooting : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		if (!GetComponent<CloneState>().getMaster())
+		if (!GetComponent<CloneState>().isMaster)
 		{
 			return;
 		}

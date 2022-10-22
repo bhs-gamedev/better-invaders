@@ -30,13 +30,19 @@ public class ClonesManager : MonoBehaviour
 		};
 	}
 
-	public void Spawn(GameObject gameObject)
+	public GameObject Spawn(GameObject gameObject, Vector3 position, Quaternion rotation)
 	{
-		GameObject master = Instantiate(gameObject);
-		master.GetComponent<CloneState>().setMaster(true);
+		GameObject master = Instantiate(gameObject, position, rotation);
+		master.SetActive(false);
+		master.GetComponent<CloneState>().isMaster = true;
+		master.GetComponent<CloneState>().master = master;
 		clonesTable.Add(master, new GameObject[4]);
 
 		CreateClones(master);
+
+		master.SetActive(true);
+
+		return master;
 	}
 
 	void Update()
@@ -97,30 +103,44 @@ public class ClonesManager : MonoBehaviour
 	GameObject makeClone(GameObject master, Vector3 offset)
 	{
 		GameObject clone = Instantiate(master);
-		clone.GetComponent<CloneState>().setMaster(false);
+		clone.SetActive(false);
+		clone.GetComponent<CloneState>().isMaster = false;
+		clone.GetComponent<CloneState>().master = master;
 		Transform cloneTransform = clone.GetComponent<Transform>();
 		cloneTransform.position = cloneTransform.position + offset;
 		cloneTransform.localScale = master.transform.localScale;
 
+		clone.SetActive(true);
+
 		return clone;
 	}
 
-	public void setState<T>(string key, T value)
+	public void setState<T>(GameObject go, string key, T value)
 	{
-		if (stateTable.ContainsKey(key))
+		Hashtable state;
+
+		if (stateTable.Contains(go))
 		{
-			stateTable[key] = value;
+			state = stateTable[go] as Hashtable;
 		}
 		else
 		{
-			stateTable.Add(key, value);
+			stateTable.Add(go, new Hashtable());
+			state = stateTable[go] as Hashtable;
+		}
+		if (state.ContainsKey(key))
+		{
+			state[key] = value;
+		}
+		else
+		{
+			state.Add(key, value);
 		}
 	}
 
-	public T getState<T>(string key)
+	public T getState<T>(GameObject go, string key)
 	{
-
-		return (T)stateTable[key];
+		return (T)(stateTable[go] as Hashtable)[key];
 	}
 
 	public void destroyClones(GameObject gObj)
@@ -128,6 +148,15 @@ public class ClonesManager : MonoBehaviour
 		for (int i = 0; i < 4; i++)
 		{
 			Destroy((clonesTable[gObj] as GameObject[])[i]);
+		}
+	}
+
+	public void enableClones(GameObject go)
+	{
+		GameObject[] clones = clonesTable[go] as GameObject[];
+		foreach (GameObject clone in clones)
+		{
+			clone.SetActive(true);
 		}
 	}
 }

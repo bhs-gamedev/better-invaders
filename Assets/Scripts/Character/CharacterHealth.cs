@@ -10,16 +10,16 @@ public class CharacterHealth : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
 	{
-		if (GetComponent<CloneState>().getMaster())
+		if (GetComponent<CloneState>().isMaster)
 		{
-			ClonesManager.singleton.setState("playerHealth", maxHealth);
+			ClonesManager.singleton.setState(gameObject, "playerHealth", maxHealth);
 		}
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-		if (ClonesManager.singleton.getState<int>("playerHealth") <= 0 && GetComponent<CloneState>().getMaster()) // bad
+		if (GetComponent<CloneState>().isMaster && ClonesManager.singleton.getState<int>(gameObject, "playerHealth") <= 0) // bad
 		{
 			GameManager.singleton.GameOver();
 			ClonesManager.singleton.destroyClones(gameObject);
@@ -29,9 +29,7 @@ public class CharacterHealth : MonoBehaviour
 
 	public void Damage(int amount)
 	{
-		int newHealth = ClonesManager.singleton.getState<int>("playerHealth") - amount;
-		ClonesManager.singleton.setState("playerHealth", newHealth);
-
-
+		int newHealth = ClonesManager.singleton.getState<int>(GetComponent<CloneState>().master, "playerHealth") - amount;
+		ClonesManager.singleton.setState(GetComponent<CloneState>().master, "playerHealth", newHealth);
 	}
 }

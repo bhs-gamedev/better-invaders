@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
 	{
-		ClonesManager.singleton.Spawn(playerPrefab);
+		ClonesManager.singleton.Spawn(playerPrefab, Vector3.zero, Quaternion.identity);
 	}
 
 	// Update is called once per frame
@@ -45,8 +45,8 @@ public class GameManager : MonoBehaviour
 			new Vector3(-width, Random.Range(-height, height), 0)
 		};
 		Vector3 position = positions[Random.Range(0, 4)];
-		GameObject enemy = Instantiate(enemyPrefab, position, Quaternion.identity);
-		enemy.GetComponent<Enemy>().velocity = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized * 4;
+		GameObject enemy = ClonesManager.singleton.Spawn(enemyPrefab, position, Quaternion.identity);
+		enemy.GetComponent<Enemy>().setVelocity(new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized * 4);
 		lastSpawn = 0;
 	}
 

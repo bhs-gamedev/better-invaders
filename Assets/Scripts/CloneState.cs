@@ -4,15 +4,6 @@ using UnityEngine;
 
 public class CloneState : MonoBehaviour
 {
-	private bool isMaster = false;
-
-	public void setMaster(bool state)
-	{
-		isMaster = state;
-	}
-
-	public bool getMaster()
-	{
-		return isMaster;
-	}
+	public bool isMaster = false;
+	public GameObject master;
 }

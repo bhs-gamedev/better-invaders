@@ -13,25 +13,21 @@ public class CharacterMovement : MonoBehaviour
 	void Awake()
 	{
 		_RB = GetComponent<Rigidbody2D>();
+
+		if (!GetComponent<CloneState>().isMaster)
+		{
+			Destroy(this);
+		}
 	}
 
 	void FixedUpdate()
 	{
-		if (!GetComponent<CloneState>().getMaster())
-		{
-			return;
-		}
-
 		_RB.velocity = movementVector * speed;
 		_RB.rotation = rotationEuler;
 	}
 
 	void Update()
 	{
-		if (!GetComponent<CloneState>().getMaster())
-		{
-			return;
-		}
 
 		movementVector = GetMovement();
 		rotationEuler = GetMouseAngle();
