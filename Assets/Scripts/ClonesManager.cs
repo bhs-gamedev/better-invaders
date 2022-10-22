@@ -9,6 +9,7 @@ public class ClonesManager : MonoBehaviour
 	public static ClonesManager singleton;
 	private Hashtable stateTable = new Hashtable();
 	private Hashtable clonesTable = new Hashtable();
+	private Hashtable listenerTable = new Hashtable();
 	private Vector3[] offsets;
 
 	void Awake()
@@ -101,5 +102,31 @@ public class ClonesManager : MonoBehaviour
 		cloneTransform.localScale = master.transform.localScale;
 
 		return clone;
+	}
+
+	public void setState<T>(string key, T value)
+	{
+		if (stateTable.ContainsKey(key))
+		{
+			stateTable[key] = value;
+		}
+		else
+		{
+			stateTable.Add(key, value);
+		}
+	}
+
+	public T getState<T>(string key)
+	{
+
+		return (T)stateTable[key];
+	}
+
+	public void destroyClones(GameObject gObj)
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			Destroy((clonesTable[gObj] as GameObject[])[i]);
+		}
 	}
 }

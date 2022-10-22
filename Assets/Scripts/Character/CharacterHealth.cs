@@ -5,26 +5,35 @@ using UnityEngine;
 public class CharacterHealth : MonoBehaviour
 {
 	[SerializeField]
-	int health = 3;
+	int maxHealth = 3;
 
 	// Start is called before the first frame update
 	void Start()
 	{
+		if (GetComponent<CloneState>().getMaster())
+		{
+			ClonesManager.singleton.setState("playerHealth", maxHealth);
+		}
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
+		Debug.Log(ClonesManager.singleton.getState<int>("playerHealth"));
 
+		if (ClonesManager.singleton.getState<int>("playerHealth") <= 0 && GetComponent<CloneState>().getMaster()) // bad
+		{
+			GameManager.singleton.GameOver();
+			ClonesManager.singleton.destroyClones(gameObject);
+			Destroy(gameObject);
+		}
 	}
 
 	public void Damage(int amount)
 	{
-		health -= amount;
-		if (health <= 0)
-		{
-			GameManager.singleton.GameOver();
-			Destroy(gameObject);
-		}
+		int newHealth = ClonesManager.singleton.getState<int>("playerHealth") - amount;
+		ClonesManager.singleton.setState("playerHealth", newHealth);
+
+
 	}
 }
