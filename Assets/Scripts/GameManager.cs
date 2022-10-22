@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
 	public static GameManager singleton;
+	[SerializeField] TMP_Text scoreText;
+	private int killCount = 0;
 	void Awake()
 	{
 		singleton = this;
@@ -55,6 +58,7 @@ public class GameManager : MonoBehaviour
 	public void GameOver()
 	{
 		isPlaying = false;
+		scoreText.text = "Score: " + CalculateScore();
 		gameOverMenu.SetActive(true);
 		Debug.Log(score);
 	}
@@ -64,9 +68,14 @@ public class GameManager : MonoBehaviour
 		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 	}
 
+	float CalculateScore()
+	{
+		return score + killCount;
+	}
+
 	public void IncrementKills()
 	{
-		score += 1;
+		killCount += 1;
 	}
 
 }
