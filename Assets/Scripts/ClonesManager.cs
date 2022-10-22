@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using UnityEngine.SceneManagement;
+
 public class ClonesManager : MonoBehaviour
 {
 	public static ClonesManager singleton;
@@ -29,7 +31,7 @@ public class ClonesManager : MonoBehaviour
 	public void Spawn(GameObject gameObject)
 	{
 		GameObject master = Instantiate(gameObject);
-		master.GetComponent<CloneState>().setMaster(true); // WHY DOES IT ONLY WORK LIKE THIS
+		master.GetComponent<CloneState>().setMaster(true);
 		clonesTable.Add(master, new GameObject[4]);
 
 		CreateClones(master);
@@ -40,35 +42,44 @@ public class ClonesManager : MonoBehaviour
 		float cameraHeight = Camera.main.orthographicSize * 2f;
 		float cameraWidth = Camera.main.orthographicSize * Camera.main.aspect * 2f;
 
-		// foreach (GameObject[] go in clonesTable.Values)
-		// {
-		// 	Debug.Log(1);
-		// }
+		List<GameObject> deletedObjects = new List<GameObject>();
 
 		foreach (DictionaryEntry item in clonesTable)
 		{
-			Transform transform = ((GameObject)(item.Key)).transform; // lol
-			if (transform.position.x < -cameraWidth / 2)
+			try
 			{
-				transform.position = transform.position + new Vector3(cameraWidth, 0, 0);
+				Transform transform = ((GameObject)(item.Key)).transform; // lol
+				if (transform.position.x < -cameraWidth / 2)
+				{
+					transform.position = transform.position + new Vector3(cameraWidth, 0, 0);
+				}
+				else if (transform.position.x > cameraWidth / 2)
+				{
+					transform.position = transform.position + new Vector3(-cameraWidth, 0, 0);
+				}
+				else if (transform.position.y < -cameraHeight / 2)
+				{
+					transform.position = transform.position + new Vector3(0, cameraHeight, 0);
+				}
+				else if (transform.position.y > cameraHeight / 2)
+				{
+					transform.position = transform.position + new Vector3(0, -cameraHeight, 0);
+				}
+				for (int i = 0; i < 4; i++)
+				{
+					((GameObject[])(item.Value))[i].transform.position = transform.position + offsets[i];
+					((GameObject[])(item.Value))[i].transform.rotation = transform.rotation;
+				}
 			}
-			else if (transform.position.x > cameraWidth / 2)
+			catch (MissingReferenceException)
 			{
-				transform.position = transform.position + new Vector3(-cameraWidth, 0, 0);
+				deletedObjects.Add((GameObject)(item.Key));
 			}
-			else if (transform.position.y < -cameraHeight / 2)
-			{
-				transform.position = transform.position + new Vector3(0, cameraHeight, 0);
-			}
-			else if (transform.position.y > cameraHeight / 2)
-			{
-				transform.position = transform.position + new Vector3(0, -cameraHeight, 0);
-			}
-			for (int i = 0; i < 4; i++)
-			{
-				((GameObject[])(item.Value))[i].transform.position = transform.position + offsets[i];
-				((GameObject[])(item.Value))[i].transform.rotation = transform.rotation;
-			}
+		}
+
+		foreach (GameObject go in deletedObjects)
+		{
+			clonesTable.Remove(go);
 		}
 	}
 
@@ -90,10 +101,5 @@ public class ClonesManager : MonoBehaviour
 		cloneTransform.localScale = master.transform.localScale;
 
 		return clone;
-	}
-
-	void updatePositions(string name)
-	{
-
 	}
 }
