@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
 
 	float lastSpawn = 0f;
 	bool isPlaying = true;
+
+	float score = 0f;
 	[SerializeField] private GameObject enemyPrefab;
 	[SerializeField] private GameObject gameOverMenu;
 	[SerializeField] private GameObject playerPrefab;
@@ -54,11 +56,17 @@ public class GameManager : MonoBehaviour
 	{
 		isPlaying = false;
 		gameOverMenu.SetActive(true);
+		Debug.Log(score);
 	}
 
 	public void PlayAgain()
 	{
 		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+	}
+
+	public void IncrementKills()
+	{
+		score += 1;
 	}
 
 }

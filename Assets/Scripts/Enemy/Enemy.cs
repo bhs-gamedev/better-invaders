@@ -35,6 +35,14 @@ public class Enemy : MonoBehaviour
 	public void setVelocity(Vector2 velocity)
 	{
 		rb.velocity = velocity;
-		ClonesManager.singleton.enableClones(gameObject);
+		// ClonesManager.singleton.enableClones(gameObject);
+	}
+
+	void OnDestroy()
+	{
+		if (GetComponent<CloneState>().isMaster)
+		{
+			ClonesManager.singleton.destroyClones(gameObject);
+		}
 	}
 }

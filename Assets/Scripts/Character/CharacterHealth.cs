@@ -8,6 +8,10 @@ public class CharacterHealth : MonoBehaviour
 	int maxHealth = 3;
 
 	// Start is called before the first frame update
+	void Awake()
+	{
+		Debug.Log(GetComponent<CloneState>().isMaster);
+	}
 	void Start()
 	{
 		if (GetComponent<CloneState>().isMaster)

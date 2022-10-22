@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using UnityEngine.SceneManagement;
-
 public class ClonesManager : MonoBehaviour
 {
 	public static ClonesManager singleton;
@@ -15,11 +13,6 @@ public class ClonesManager : MonoBehaviour
 	void Awake()
 	{
 		singleton = this;
-		SceneManager.sceneLoaded += OnSceneLoaded;
-	}
-
-	void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-	{
 		float cameraHeight = Camera.main.orthographicSize * 2f;
 		float cameraWidth = Camera.main.orthographicSize * Camera.main.aspect * 2f;
 		offsets = new Vector3[] {
