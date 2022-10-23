@@ -53,7 +53,6 @@ public class GameManager : MonoBehaviour
 			hudScoreText.GetComponent<TMP_Text>().text = "Score: " + CalculateScore();
 			timeLasted += Time.deltaTime;
 		}
-		// Debug.Log(timeLasted);
 	}
 
 	void SpawnEnemy()
