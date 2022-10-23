@@ -57,26 +57,39 @@ public class MenuManager : MonoBehaviour
         mainMenu.SetActive(false);
         leaderboard.SetActive(true);
 
-        if (PlayerPrefs.HasKey("scoreCount"))
+        int scoreCount = PlayerPrefs.GetInt("scoreCount");
+        List<int[]> highscores = new List<int[]>();
+        for (int i = 0; i < scoreCount; i++)
         {
-            int scoreCount = PlayerPrefs.GetInt("scoreCount");
-            List<int[]> highscores = new List<int[]>();
-            for (int i = 0; i < scoreCount; i++)
-            {
-                highscores.Add(new int[] {i, PlayerPrefs.GetInt("score" + i)});
-            }
-            highscores.Sort(new ScoreComparer());
-
-            for (int i = 0; i < Math.Min(10, scoreCount); i++)
-            {
-                scores.transform.GetChild(i).GetComponent<TMP_Text>().text = PlayerPrefs.GetString("score" + highscores[i][0] + "name") + ": " + highscores[i][1].ToString();
-            }
+            highscores.Add(new int[] {i, PlayerPrefs.GetInt("score" + i)});
         }
+        highscores.Sort(new ScoreComparer());
+
+        for (int i = 0; i < 10; i++)
+        {
+            string text;
+            if (i < scoreCount)
+            {
+                text = PlayerPrefs.GetString("score" + highscores[i][0] + "name") + ": " + highscores[i][1].ToString();
+            }
+            else
+            {
+                text = "";
+            }
+            scores.transform.GetChild(i).GetComponent<TMP_Text>().text = text;
+        }
+
     }
 
     public void ShowMenu()
     {
         leaderboard.SetActive(false);
         mainMenu.SetActive(true);
+    }
+
+    public void ResetLeaderboard()
+    {
+        PlayerPrefs.DeleteAll();
+        ShowLeaderboard();
     }
 }

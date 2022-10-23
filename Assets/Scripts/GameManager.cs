@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
 	public static GameManager singleton;
 	[SerializeField] TMP_Text scoreText;
 	private int killCount = 0;
-	private int timeLasted = 0;
+	private float timeLasted = 0;
 	void Awake()
 	{
 		singleton = this;
@@ -21,26 +21,37 @@ public class GameManager : MonoBehaviour
 
 	float spawnCooldown = 3.0f;
 
-	float score = 0f;
 	[SerializeField] private GameObject enemyPrefab;
 	[SerializeField] private GameObject gameOverMenu;
 	[SerializeField] private GameObject playerPrefab;
 	[SerializeField] private GameObject nameInput;
+	[SerializeField] private GameObject hud;
+	[SerializeField] private GameObject healthHUD;
+	[SerializeField] private GameObject healthIcon;
+	[SerializeField] private TMP_Text hudScoreText;
 
 	// Start is called before the first frame update
 	void Start()
 	{
-		ClonesManager.singleton.Spawn(playerPrefab, Vector3.zero, Quaternion.identity);
+		GameObject player = ClonesManager.singleton.Spawn(playerPrefab, Vector3.zero, Quaternion.identity);
 		StartCoroutine(gameClock());
+		for (int i = 0; i < player.GetComponent<CharacterHealth>().maxHealth; i++)
+		{
+			Instantiate(healthIcon, healthHUD.transform);
+		}
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
 		lastSpawn += Time.deltaTime;
-		if (isPlaying && lastSpawn > spawnCooldown)
-		{
-			SpawnEnemy();
+		if (isPlaying) {
+			if (lastSpawn > spawnCooldown)
+			{
+				SpawnEnemy();
+			}
+			hudScoreText.GetComponent<TMP_Text>().text = "Score: " + CalculateScore();
+			timeLasted += Time.deltaTime;
 		}
 		// Debug.Log(timeLasted);
 	}
@@ -63,10 +74,23 @@ public class GameManager : MonoBehaviour
 		lastSpawn = 0;
 	}
 
+	public void UpdateHealth(int health)
+	{
+		foreach (Transform child in healthHUD.transform)
+		{
+			child.gameObject.SetActive(false);
+		}
+		for (int i = 0; i < health; i++)
+		{
+			healthHUD.transform.GetChild(i).gameObject.SetActive(true);
+		}
+	}
+
 	public void GameOver()
 	{
 		isPlaying = false;
 		scoreText.text = "Score: " + CalculateScore();
+		hud.SetActive(false);
 		gameOverMenu.SetActive(true);
 		// Debug.Log(score);
 	}
@@ -78,7 +102,7 @@ public class GameManager : MonoBehaviour
 
 	int CalculateScore()
 	{
-		return (int)( Mathf.Pow(timeLasted, 2) * (1 + killCount));
+		return (int) (Mathf.Pow(timeLasted, 2) * (1 + killCount));
 	}
 
 	public void IncrementKills()
@@ -91,7 +115,6 @@ public class GameManager : MonoBehaviour
 		while (isPlaying)
 		{
 			yield return new WaitForSeconds(1);
-			timeLasted += 1;
 			if (spawnCooldown > 0.5f) spawnCooldown -= 0.05f;
 		}
 	}
@@ -112,8 +135,13 @@ public class GameManager : MonoBehaviour
 		{
 			index = PlayerPrefs.GetInt("scoreCount");
 		}
+		string name = nameInput.GetComponent<TMP_Text>().text;
+		if (name.Contains("your name here"))
+		{
+			name = "no name";
+		}
 		PlayerPrefs.SetInt("score" + index, CalculateScore());
-		PlayerPrefs.SetString("score" + index + "name", nameInput.GetComponent<TMP_Text>().text);
+		PlayerPrefs.SetString("score" + index + "name", name);
 		PlayerPrefs.SetInt("scoreCount", index + 1);
 	}
 }

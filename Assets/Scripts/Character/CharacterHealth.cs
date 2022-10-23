@@ -5,7 +5,7 @@ using UnityEngine;
 public class CharacterHealth : MonoBehaviour
 {
 	[SerializeField]
-	int maxHealth = 3;
+	public int maxHealth = 3;
 	[SerializeField]
 	ParticleSystem deathParticles;
 	[SerializeField] ParticleSystem damageParticles;
@@ -41,5 +41,6 @@ public class CharacterHealth : MonoBehaviour
 		ClonesManager.singleton.setState(GetComponent<CloneState>().master, "playerHealth", newHealth);
 
 		Instantiate(damageParticles, transform.position, Quaternion.identity);
+		GameManager.singleton.UpdateHealth(newHealth);
 	}
 }
