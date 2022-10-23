@@ -92,4 +92,12 @@ public class MenuManager : MonoBehaviour
         PlayerPrefs.DeleteAll();
         ShowLeaderboard();
     }
+
+    public void Quit()
+    {
+        #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+        #endif
+        Application.Quit();
+    }
 }

@@ -53,6 +53,10 @@ public class GameManager : MonoBehaviour
 			hudScoreText.GetComponent<TMP_Text>().text = "Score: " + CalculateScore();
 			timeLasted += Time.deltaTime;
 		}
+		if (Input.GetKeyDown(KeyCode.Escape))
+        {
+			OpenMenu();
+        }
 	}
 
 	void SpawnEnemy()
