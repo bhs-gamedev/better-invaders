@@ -6,6 +6,8 @@ public class Enemy : MonoBehaviour
 {
 	Rigidbody2D rb;
 	[SerializeField] ParticleSystem deathParticles;
+	[SerializeField] private GameObject bullet;
+
 
 	// Start is called before the first frame update
 	void Awake()
@@ -15,11 +17,19 @@ public class Enemy : MonoBehaviour
 
 	void Start()
 	{
+		if (GetComponent<CloneState>().isMaster) StartCoroutine(ShootRoutine());
 	}
 
 	// Update is called once per frame
-	void Update()
+	IEnumerator ShootRoutine()
 	{
+		while (true)
+		{
+			yield return new WaitForSeconds(4);
+			Vector2 diff = GameObject.Find("Player(Clone)").transform.position - transform.position;
+			GameObject bulletObj = ClonesManager.singleton.Spawn(bullet, transform.position + (Vector3)diff.normalized, Quaternion.Euler(0, 0, Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg));
+
+		}
 	}
 
 	void OnCollisionEnter2D(Collision2D other)
@@ -45,12 +55,9 @@ public class Enemy : MonoBehaviour
 	{
 		if (!GetComponent<CloneState>().isMaster) return;
 
+		Instantiate(deathParticles, transform.position, Quaternion.identity);
+
 		ClonesManager.singleton.destroyClones(gameObject);
 		Destroy(gameObject);
-	}
-
-	void OnDestroy()
-	{
-		Instantiate(deathParticles, transform.position, Quaternion.identity);
 	}
 }

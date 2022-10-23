@@ -44,7 +44,7 @@ public class CharacterMovement : MonoBehaviour
 
 	Vector2 GetMovement()
 	{
-		return new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+		return new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 	}
 
 	float GetMouseAngle()

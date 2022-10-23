@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
 	float lastSpawn = 0f;
 	bool isPlaying = true;
 
+	float spawnCooldown = 3.0f;
+
 	float score = 0f;
 	[SerializeField] private GameObject enemyPrefab;
 	[SerializeField] private GameObject gameOverMenu;
@@ -35,7 +37,7 @@ public class GameManager : MonoBehaviour
 	void Update()
 	{
 		lastSpawn += Time.deltaTime;
-		if (isPlaying && lastSpawn > 3)
+		if (isPlaying && lastSpawn > spawnCooldown)
 		{
 			SpawnEnemy();
 		}
@@ -75,7 +77,7 @@ public class GameManager : MonoBehaviour
 
 	float CalculateScore()
 	{
-		return score + killCount;
+		return timeLasted * killCount;
 	}
 
 	public void IncrementKills()
@@ -89,6 +91,7 @@ public class GameManager : MonoBehaviour
 		{
 			yield return new WaitForSeconds(1);
 			timeLasted += 1;
+			if (spawnCooldown > 1.0f) spawnCooldown -= 0.05f;
 		}
 	}
 }

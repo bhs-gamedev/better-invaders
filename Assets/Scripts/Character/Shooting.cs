@@ -30,7 +30,7 @@ public class Shooting : MonoBehaviour
 		if (Input.GetMouseButtonDown(0))
 		{
 			// Debug.Log("Left mouse clicked");
-			ClonesManager.singleton.Spawn(Bullet, transform.position + transform.right, transform.rotation);
+			GameObject bullet = ClonesManager.singleton.Spawn(Bullet, transform.position + transform.right, transform.rotation);
 		}
 	}
 
