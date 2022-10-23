@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
 	[SerializeField] private GameObject enemyPrefab;
 	[SerializeField] private GameObject gameOverMenu;
 	[SerializeField] private GameObject playerPrefab;
+	[SerializeField] private GameObject nameInput;
 
 	// Start is called before the first frame update
 	void Start()
@@ -75,9 +76,9 @@ public class GameManager : MonoBehaviour
 		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 	}
 
-	float CalculateScore()
+	int CalculateScore()
 	{
-		return Mathf.Pow(timeLasted, 2) * (1 + killCount);
+		return (int)( Mathf.Pow(timeLasted, 2) * (1 + killCount));
 	}
 
 	public void IncrementKills()
@@ -93,5 +94,26 @@ public class GameManager : MonoBehaviour
 			timeLasted += 1;
 			if (spawnCooldown > 0.5f) spawnCooldown -= 0.05f;
 		}
+	}
+
+	public void OpenMenu()
+	{
+		SceneManager.LoadScene("Menu");
+	}
+
+	public void SaveScore()
+	{
+		int index;
+		if (!PlayerPrefs.HasKey("scoreCount"))
+		{
+			index = 0;
+		}
+		else
+		{
+			index = PlayerPrefs.GetInt("scoreCount");
+		}
+		PlayerPrefs.SetInt("score" + index, CalculateScore());
+		PlayerPrefs.SetString("score" + index + "name", nameInput.GetComponent<TMP_Text>().text);
+		PlayerPrefs.SetInt("scoreCount", index + 1);
 	}
 }
