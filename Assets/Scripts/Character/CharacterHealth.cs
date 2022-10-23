@@ -10,7 +10,7 @@ public class CharacterHealth : MonoBehaviour
 	// Start is called before the first frame update
 	void Awake()
 	{
-		Debug.Log(GetComponent<CloneState>().isMaster);
+		// Debug.Log(GetComponent<CloneState>().isMaster);
 	}
 	void Start()
 	{

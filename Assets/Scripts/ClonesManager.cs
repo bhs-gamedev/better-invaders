@@ -142,6 +142,7 @@ public class ClonesManager : MonoBehaviour
 		{
 			Destroy((clonesTable[gObj] as GameObject[])[i]);
 		}
+		clonesTable.Remove(gObj);
 	}
 
 	public void enableClones(GameObject go)

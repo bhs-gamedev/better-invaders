@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
 		{
 			SpawnEnemy();
 		}
-		Debug.Log(timeLasted);
+		// Debug.Log(timeLasted);
 	}
 
 	void SpawnEnemy()
@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour
 		isPlaying = false;
 		scoreText.text = "Score: " + CalculateScore();
 		gameOverMenu.SetActive(true);
-		Debug.Log(score);
+		// Debug.Log(score);
 	}
 
 	public void PlayAgain()

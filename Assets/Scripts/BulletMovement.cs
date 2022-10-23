@@ -29,16 +29,9 @@ public class BulletMovement : MonoBehaviour
 		if (col.tag == "Enemy" && GetComponent<CloneState>().isMaster && col.gameObject.GetComponent<CloneState>().isMaster)
 		{
 			GameManager.singleton.IncrementKills();
-			Destroy(col.gameObject);
-			Destroy(gameObject);
-		}
-	}
-
-	void OnDestroy()
-	{
-		if (GetComponent<CloneState>().isMaster)
-		{
+			col.gameObject.GetComponent<Enemy>().Kill();
 			ClonesManager.singleton.destroyClones(gameObject);
+			Destroy(gameObject);
 		}
 	}
 }

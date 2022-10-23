@@ -29,7 +29,7 @@ public class Shooting : MonoBehaviour
 		}
 		if (Input.GetMouseButtonDown(0))
 		{
-			Debug.Log("Left mouse clicked");
+			// Debug.Log("Left mouse clicked");
 			ClonesManager.singleton.Spawn(Bullet, transform.position, transform.rotation);
 		}
 	}

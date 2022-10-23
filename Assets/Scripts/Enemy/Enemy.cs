@@ -38,11 +38,11 @@ public class Enemy : MonoBehaviour
 		// ClonesManager.singleton.enableClones(gameObject);
 	}
 
-	void OnDestroy()
+	public void Kill()
 	{
-		if (GetComponent<CloneState>().isMaster)
-		{
-			ClonesManager.singleton.destroyClones(gameObject);
-		}
+		if (!GetComponent<CloneState>().isMaster) return;
+
+		ClonesManager.singleton.destroyClones(gameObject);
+		Destroy(gameObject);
 	}
 }

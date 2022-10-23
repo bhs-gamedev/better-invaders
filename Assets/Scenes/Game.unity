@@ -526,6 +526,7 @@ GameObject:
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
   - component: {fileID: 519420030}
+  - component: {fileID: 519420033}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -632,6 +633,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &519420033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6829bcbe222f2c4b9dc1429927c3a4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -772,6 +785,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff985ffc122053b4198e7b159c79f988, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreText: {fileID: 1738113082}
   enemyPrefab: {fileID: 2800966622623389571, guid: 72da83d23c2c80c6ca4b1a3eb42fe065, type: 3}
   gameOverMenu: {fileID: 994496603}
   playerPrefab: {fileID: 8291154372635297964, guid: ff54df02e64c454459ca7d7c46e3eb85, type: 3}
