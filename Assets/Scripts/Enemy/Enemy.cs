@@ -23,12 +23,20 @@ public class Enemy : MonoBehaviour
 	// Update is called once per frame
 	IEnumerator ShootRoutine()
 	{
-		while (true)
+		bool playerAlive = true;
+		while (playerAlive)
 		{
 			yield return new WaitForSeconds(4);
-			Vector2 diff = GameObject.Find("Player(Clone)").transform.position - transform.position;
-			GameObject bulletObj = ClonesManager.singleton.Spawn(bullet, transform.position + (Vector3)diff.normalized, Quaternion.Euler(0, 0, Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg));
-
+			GameObject player = GameObject.Find("Player(Clone)");
+			if (player != null)
+			{
+				Vector2 diff = player.transform.position - transform.position;
+				GameObject bulletObj = ClonesManager.singleton.Spawn(bullet, transform.position, Quaternion.Euler(0, 0, Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg));
+			}
+			else
+			{
+				playerAlive = false;
+			}
 		}
 	}
 

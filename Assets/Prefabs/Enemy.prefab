@@ -102,7 +102,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deathParticles: {fileID: 6600591385910826774, guid: 735e8023cf9ff23428f7b8e155fdf4f6, type: 3}
-  bullet: {fileID: 3876810953220078879, guid: 8410cb979764e4ae99a9b938be20a5af, type: 3}
+  bullet: {fileID: 3876810953220078879, guid: 1beeed930aafaf74eb4fd56317ee9996, type: 3}
 --- !u!58 &-3865949834299230938
 CircleCollider2D:
   m_ObjectHideFlags: 0

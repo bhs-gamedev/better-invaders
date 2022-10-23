@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletMovement : MonoBehaviour
+public class EnemyBullet : MonoBehaviour
 {
 	[SerializeField] private float speed = 5;
-	[SerializeField] private float lifetime = 5.0f;
+    [SerializeField] GameObject particles;
 	private Rigidbody2D RB;
+	private float lifetime = 3.0f;
 
 	void Awake()
 	{
 		RB = GetComponent<Rigidbody2D>();
-
 	}
 
 	void Start()
@@ -36,10 +36,9 @@ public class BulletMovement : MonoBehaviour
 		{
 			if (col.tag == "Enemy")
 			{
-				GameManager.singleton.IncrementKills();
-				col.gameObject.GetComponent<Enemy>().Die();
-				ClonesManager.singleton.destroyClones(gameObject);
-				Destroy(gameObject);
+				// col.gameObject.GetComponent<Enemy>().Die();
+				// ClonesManager.singleton.destroyClones(gameObject);
+				// Destroy(gameObject);
 			}
 			else if (col.tag == "Player")
 			{
@@ -51,6 +50,8 @@ public class BulletMovement : MonoBehaviour
 			{
 				ClonesManager.singleton.destroyClones(gameObject);
 				Destroy(gameObject);
+				Instantiate(particles, transform.position, Quaternion.identity);
+
 			}
 		}
 	}
@@ -62,4 +63,3 @@ public class BulletMovement : MonoBehaviour
 		Destroy(gameObject);
 	}
 }
-
