@@ -77,7 +77,7 @@ public class GameManager : MonoBehaviour
 
 	float CalculateScore()
 	{
-		return timeLasted * killCount;
+		return Mathf.Pow(timeLasted, 2) * (1 + killCount);
 	}
 
 	public void IncrementKills()
@@ -91,7 +91,7 @@ public class GameManager : MonoBehaviour
 		{
 			yield return new WaitForSeconds(1);
 			timeLasted += 1;
-			if (spawnCooldown > 1.0f) spawnCooldown -= 0.05f;
+			if (spawnCooldown > 0.5f) spawnCooldown -= 0.05f;
 		}
 	}
 }
