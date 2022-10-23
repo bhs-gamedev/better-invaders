@@ -53,8 +53,10 @@ public class GameManager : MonoBehaviour
 			new Vector3(-width, Random.Range(-height, height), 0)
 		};
 		Vector3 position = positions[Random.Range(0, 4)];
-		GameObject enemy = ClonesManager.singleton.Spawn(enemyPrefab, position, Quaternion.identity);
-		enemy.GetComponent<Enemy>().setVelocity(new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized * 4);
+		Vector2 velocity = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized * 4;
+		float rotationEuler = Mathf.Atan2(velocity.y, velocity.x) * Mathf.Rad2Deg;
+		GameObject enemy = ClonesManager.singleton.Spawn(enemyPrefab, position, Quaternion.Euler(0, 0, rotationEuler));
+		enemy.GetComponent<Enemy>().setVelocity(velocity);
 		lastSpawn = 0;
 	}
 

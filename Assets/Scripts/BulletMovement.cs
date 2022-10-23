@@ -26,12 +26,21 @@ public class BulletMovement : MonoBehaviour
 
 	void OnTriggerEnter2D(Collider2D col)
 	{
-		if (col.tag == "Enemy" && GetComponent<CloneState>().isMaster && col.gameObject.GetComponent<CloneState>().isMaster)
+		if (GetComponent<CloneState>().isMaster && col.gameObject.GetComponent<CloneState>().isMaster)
 		{
-			GameManager.singleton.IncrementKills();
-			col.gameObject.GetComponent<Enemy>().Kill();
-			ClonesManager.singleton.destroyClones(gameObject);
-			Destroy(gameObject);
+			if (col.tag == "Enemy")
+			{
+				GameManager.singleton.IncrementKills();
+				col.gameObject.GetComponent<Enemy>().Die();
+				ClonesManager.singleton.destroyClones(gameObject);
+				Destroy(gameObject);
+			}
+			else if (col.tag == "Player")
+			{
+				col.gameObject.GetComponent<CharacterHealth>().Damage(1);
+				ClonesManager.singleton.destroyClones(gameObject);
+				Destroy(gameObject);
+			}
 		}
 	}
 }

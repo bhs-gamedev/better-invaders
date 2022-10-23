@@ -9,6 +9,7 @@ public class CharacterMovement : MonoBehaviour
 	private Rigidbody2D _RB;
 	private Vector2 movementVector;
 	private float rotationEuler;
+	[SerializeField] private GameObject thrusters;
 
 	void Awake()
 	{
@@ -28,9 +29,17 @@ public class CharacterMovement : MonoBehaviour
 
 	void Update()
 	{
-
 		movementVector = GetMovement();
 		rotationEuler = GetMouseAngle();
+
+		if (movementVector.x == 0 && movementVector.y == 0)
+		{
+			thrusters.SetActive(false);
+		}
+		else
+		{
+			thrusters.SetActive(true);
+		}
 	}
 
 	Vector2 GetMovement()

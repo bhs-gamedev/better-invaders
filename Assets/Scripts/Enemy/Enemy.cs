@@ -5,6 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
 	Rigidbody2D rb;
+	[SerializeField] ParticleSystem deathParticles;
 
 	// Start is called before the first frame update
 	void Awake()
@@ -28,6 +29,8 @@ public class Enemy : MonoBehaviour
 			if (other.gameObject.GetComponent<CloneState>().isMaster && gameObject.GetComponent<CloneState>().isMaster)
 			{
 				other.gameObject.GetComponent<CharacterHealth>().Damage(1);
+				ClonesManager.singleton.destroyClones(gameObject);
+				Destroy(gameObject);
 			}
 		}
 	}
@@ -38,11 +41,16 @@ public class Enemy : MonoBehaviour
 		// ClonesManager.singleton.enableClones(gameObject);
 	}
 
-	public void Kill()
+	public void Die()
 	{
 		if (!GetComponent<CloneState>().isMaster) return;
 
 		ClonesManager.singleton.destroyClones(gameObject);
 		Destroy(gameObject);
+	}
+
+	void OnDestroy()
+	{
+		Instantiate(deathParticles, transform.position, Quaternion.identity);
 	}
 }

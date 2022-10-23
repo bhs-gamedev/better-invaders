@@ -6,6 +6,9 @@ public class CharacterHealth : MonoBehaviour
 {
 	[SerializeField]
 	int maxHealth = 3;
+	[SerializeField]
+	ParticleSystem deathParticles;
+	[SerializeField] ParticleSystem damageParticles;
 
 	// Start is called before the first frame update
 	void Awake()
@@ -27,6 +30,7 @@ public class CharacterHealth : MonoBehaviour
 		{
 			GameManager.singleton.GameOver();
 			ClonesManager.singleton.destroyClones(gameObject);
+			Instantiate(deathParticles, transform.position, Quaternion.identity);
 			Destroy(gameObject);
 		}
 	}
@@ -35,5 +39,7 @@ public class CharacterHealth : MonoBehaviour
 	{
 		int newHealth = ClonesManager.singleton.getState<int>(GetComponent<CloneState>().master, "playerHealth") - amount;
 		ClonesManager.singleton.setState(GetComponent<CloneState>().master, "playerHealth", newHealth);
+
+		Instantiate(damageParticles, transform.position, Quaternion.identity);
 	}
 }
