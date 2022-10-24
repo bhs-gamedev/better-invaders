@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyBullet : MonoBehaviour
 {
 	[SerializeField] private float speed = 5;
-    [SerializeField] GameObject particles;
+	[SerializeField] GameObject particles;
 	private Rigidbody2D RB;
 	private float lifetime = 3.0f;
 
@@ -46,7 +46,7 @@ public class EnemyBullet : MonoBehaviour
 				ClonesManager.singleton.destroyClones(gameObject);
 				Destroy(gameObject);
 			}
-			else if (col.tag == "Bullet")
+			else if (col.tag == "PlayerBullet")
 			{
 				ClonesManager.singleton.destroyClones(gameObject);
 				Destroy(gameObject);

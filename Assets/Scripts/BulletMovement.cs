@@ -47,7 +47,7 @@ public class BulletMovement : MonoBehaviour
 				ClonesManager.singleton.destroyClones(gameObject);
 				Destroy(gameObject);
 			}
-			else if (col.tag == "Bullet")
+			else if (col.tag == "EnemyBullet")
 			{
 				ClonesManager.singleton.destroyClones(gameObject);
 				Destroy(gameObject);
