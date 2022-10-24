@@ -5,7 +5,10 @@ using UnityEngine;
 public class Shooting : MonoBehaviour
 {
 
-	public GameObject Bullet; // declare bullet as variable
+	[SerializeField] GameObject Bullet; // declare bullet as variable
+	[SerializeField] AudioClip shootSfx;
+	AudioSource audioSource;
+	[SerializeField] float timeSinceShot = 0f;
 
 	// Start is called before the first frame update
 	void Awake()
@@ -17,20 +20,24 @@ public class Shooting : MonoBehaviour
 	}
 	void Start()
 	{
-		// Instantiate(Bullet); // spawn in bullet
+		audioSource = gameObject.GetComponent<AudioSource>();
 	}
+
 
 	// Update is called once per frame
 	void Update()
 	{
+		timeSinceShot += Time.deltaTime;
 		if (!GetComponent<CloneState>().isMaster)
 		{
 			return;
 		}
-		if (Input.GetMouseButtonDown(0))
+		if (Input.GetMouseButtonDown(0) && timeSinceShot > .2f)
 		{
-			// Debug.Log("Left mouse clicked");
 			GameObject bullet = ClonesManager.singleton.Spawn(Bullet, transform.position + transform.right, transform.rotation);
+			audioSource.pitch = Random.Range(.7f, 1f);
+			audioSource.PlayOneShot(shootSfx, Random.Range(.7f, 1f));
+			timeSinceShot = 0;
 		}
 	}
 
