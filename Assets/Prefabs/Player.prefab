@@ -4954,6 +4954,7 @@ MonoBehaviour:
   maxHealth: 4
   deathParticles: {fileID: 6600591385910826774, guid: 926bf022789e2c343b09611f5c6481b8, type: 3}
   damageParticles: {fileID: 6600591385910826774, guid: 7dab13327fb67bd438048b0d4aec827a, type: 3}
+  damageSfx: {fileID: 8300000, guid: 1099b93011f359253b0a8d16bb70180c, type: 3}
 --- !u!114 &8291154372635297972
 MonoBehaviour:
   m_ObjectHideFlags: 0

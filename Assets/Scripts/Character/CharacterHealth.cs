@@ -9,6 +9,8 @@ public class CharacterHealth : MonoBehaviour
 	[SerializeField]
 	ParticleSystem deathParticles;
 	[SerializeField] ParticleSystem damageParticles;
+	[SerializeField] AudioClip damageSfx;
+	AudioSource audioSource;
 
 	// Start is called before the first frame update
 	void Awake()
@@ -20,6 +22,7 @@ public class CharacterHealth : MonoBehaviour
 		if (GetComponent<CloneState>().isMaster)
 		{
 			ClonesManager.singleton.setState(gameObject, "playerHealth", maxHealth);
+			audioSource = gameObject.GetComponent<AudioSource>();
 		}
 	}
 
@@ -42,5 +45,7 @@ public class CharacterHealth : MonoBehaviour
 
 		Instantiate(damageParticles, transform.position, Quaternion.identity);
 		GameManager.singleton.UpdateHealth(newHealth);
+		audioSource.pitch = Random.Range(.7f, 1f);
+		audioSource.PlayOneShot(damageSfx);
 	}
 }
