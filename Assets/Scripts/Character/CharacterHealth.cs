@@ -5,7 +5,7 @@ using UnityEngine;
 public class CharacterHealth : MonoBehaviour
 {
 	[SerializeField]
-	public int maxHealth = 3;
+	public int maxHealth = 4;
 	[SerializeField]
 	ParticleSystem deathParticles;
 	[SerializeField] ParticleSystem damageParticles;

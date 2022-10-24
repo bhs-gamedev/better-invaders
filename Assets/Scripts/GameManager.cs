@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
 	{
 		GameObject player = ClonesManager.singleton.Spawn(playerPrefab, Vector3.zero, Quaternion.identity);
 		StartCoroutine(gameClock());
-		for (int i = 0; i < player.GetComponent<CharacterHealth>().maxHealth; i++)
+		for (int i = 0; i < player.GetComponent<CharacterHealth>().maxHealth - 1; i++)
 		{
 			Instantiate(healthIcon, healthHUD.transform);
 		}
@@ -45,7 +45,8 @@ public class GameManager : MonoBehaviour
 	void Update()
 	{
 		lastSpawn += Time.deltaTime;
-		if (isPlaying) {
+		if (isPlaying)
+		{
 			if (lastSpawn > spawnCooldown)
 			{
 				SpawnEnemy();
@@ -54,9 +55,9 @@ public class GameManager : MonoBehaviour
 			timeLasted += Time.deltaTime;
 		}
 		if (Input.GetKeyDown(KeyCode.Escape))
-        {
+		{
 			OpenMenu();
-        }
+		}
 	}
 
 	void SpawnEnemy()
@@ -83,7 +84,7 @@ public class GameManager : MonoBehaviour
 		{
 			child.gameObject.SetActive(false);
 		}
-		for (int i = 0; i < health; i++)
+		for (int i = 0; i < health - 1; i++)
 		{
 			healthHUD.transform.GetChild(i).gameObject.SetActive(true);
 		}
@@ -105,7 +106,7 @@ public class GameManager : MonoBehaviour
 
 	int CalculateScore()
 	{
-		return (int) (Mathf.Pow(timeLasted, 2) * (1 + killCount));
+		return (int)(timeLasted * Mathf.Pow(1 + killCount, 1.5f));
 	}
 
 	public void IncrementKills()
