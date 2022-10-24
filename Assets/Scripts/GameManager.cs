@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour
 	{
 		GameObject player = ClonesManager.singleton.Spawn(playerPrefab, Vector3.zero, Quaternion.identity);
 		StartCoroutine(gameClock());
+		Debug.Log(player.GetComponent<CharacterHealth>().maxHealth);
 		for (int i = 0; i < player.GetComponent<CharacterHealth>().maxHealth - 1; i++)
 		{
 			Instantiate(healthIcon, healthHUD.transform);

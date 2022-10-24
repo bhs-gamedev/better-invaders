@@ -4950,7 +4950,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a157565a6a4dd467983eb42a7783214, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 3
+  maxHealth: 4
   deathParticles: {fileID: 6600591385910826774, guid: 926bf022789e2c343b09611f5c6481b8, type: 3}
   damageParticles: {fileID: 6600591385910826774, guid: 7dab13327fb67bd438048b0d4aec827a, type: 3}
 --- !u!114 &8291154372635297972
